@@ -16,24 +16,27 @@
       }
 
       body, header, h1 { margin: 0 }
-      h1, h2 { font-weight: 800; }
+      h1 { font-weight: 800; font-size: 70px; }
+      h2 { margin-top: 30px; }
       html, a {
 	  color: #1B2F33;
 	  background-color: #F3EFE0;
       }
-      header {
+      header.container {
 	  color: #F3EFE0;
 	  background-color: #F55D3E;
+	  padding: 20px 40px;
       }
 
       .container {
-	  padding: 20px 40px;
+	  padding: 0px 40px;
       }
 
       blockquote {
 	  background-color: #32A287;
 	  border-radius: 8px;
-	  padding: 5px 10px;
+	  padding: 5px 20px;
+	  margin: 30px 50px;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -56,7 +59,7 @@
 
 
     <div class="container">
-      <h2>What is auto-paging?</h2>
+      <h2>What is Auto-Paging?</h2>
 
       <p>
 	Automatically paging output from a command line tool through a
@@ -67,40 +70,40 @@
         modern command line tools.
       </p>
 
-      <h2>How to implement it</h2>
+      <h2>How to Implement Auto-Paging</h2>
 
       <p>
 	Recommendations
 	from <a href="https://mastodon.social/@juliank">Julian Andres
-	  Klode</a>, who added auto-paging support to Debian's apt
-	tool:
+	Klode</a>, who <a href="https://salsa.debian.org/apt-team/apt/-/commit/6e260e26e4cd671f781151e24d89a17b29a55530">added auto-paging support to
+	Debian's <code>apt</code> tool</a>:
       </p>
 
       <blockquote>
-	We always invoke pager and have the environment variables
-
-	<pre>
-LESS=FRX
-MORE=FRX
-LV=C
-	</pre>
-
-	<p>such that it picks up your preferred pager; and then sets up the default.</p>
+	<p>
+	  We always invoke <code>pager</code> and have the environment
+	  variables <code>LESS=FRX</code>, <code>MORE=FRX</code>
+	  and <code>LV=C</code> such that it picks up your preferred
+	  pager; and then sets up the default.
+	</p>
 
 	<p>
-	  For the auto-paging, F is important (so it doesn't page when
-	  it fits on the screen) and X is questionable (it keeps the
-	  output around after you exit the pager)
+	  For the auto-paging, <code>F</code> is important (so it
+	  doesn't page when it fits on the screen) and <code>X</code>
+	  is questionable (it keeps the output around after you exit
+	  the pager)
 	</p>
 
 	<p>
 	  Special care is taken to allow overriding the pager with
-	  APT_PAGER, PAGER; and of course if you specify "cat" as a
-	  pager you need to disable paging.
+	  <code>APT_PAGER</code>, <code>PAGER</code>; and of course if
+	  you specify <code>cat</code> as a pager you need to disable
+	  paging.
 	</p>
 
 	<p>
-	  The complex bits are in launching the pager and making sure the pager is launched; particularly
+	  The complex bits are in launching the pager and making sure
+	  the pager is launched; particularly
 	</p>
 
 	<ul>
@@ -116,9 +119,9 @@ LV=C
 	</ul>
 
 	<p>
-	  Also don't forget to redirect stdin to /dev/null (or a
-	  half-closed pipe) such that the piped process can't wait on
-	  stdin.
+	  Also don't forget to redirect <code>stdin</code>
+	  to <code>/dev/null</code> (or a half-closed pipe) such that
+	  the piped process can't wait on <code>stdin</code>.
 	</p>
 
 	<p>
@@ -129,6 +132,13 @@ LV=C
 	  It really adds up to a couple hundred lines of code.
 	</p>
       </blockquote>
+
+      <p>
+	The auto-pager implementation in <code>git</code>
+	is <a href="https://github.com/git/git/blob/683c54c999c301c2cd6f715c411407c413b1d84e/pager.c">here</a>.
+	The systemd implementation is also a good reference,
+	available <a href="https://github.com/systemd/systemd/blob/511bf79b4e424de3cbed0f5814d9fa9126ff0103/src/shared/pager.c">here</a>.
+      </p>
 
       <h2>Web Ring</h2>
       <p><a href="https://no-color.org/">no-color.org</a></p>
