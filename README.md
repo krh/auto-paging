@@ -1,2 +1,3 @@
-# auto-paging
-web site
+# Web Site for `auto-paging.org`
+
+Totally not procrastinating.

@@ -12,11 +12,11 @@
       html {
 	  font-family: "Nunito", sans-serif;
 	  font-optical-sizing: auto;
-	  font-weight: <weight>;
 	  font-style: normal;
       }
 
       body, header, h1 { margin: 0 }
+      h1, h2 { font-weight: 800; }
       html, a {
 	  color: #1B2F33;
 	  background-color: #F3EFE0;
@@ -30,10 +30,20 @@
 	  padding: 20px 40px;
       }
 
+      blockquote {
+	  background-color: #32A287;
+	  border-radius: 8px;
+	  padding: 5px 10px;
+      }
+
       @media (prefers-color-scheme: dark) {
 	  html, a {
 	      background-color: #1B2F33;
 	      color: #F3EFE0;
+	  }
+
+	  blockquote {
+	      background-color: #755B69;
 	  }
       }
     </style>
@@ -48,9 +58,80 @@
     <div class="container">
       <h2>What is auto-paging?</h2>
 
-      <p>Automatically paging output from a command line tool through a pager such as <code><a href="https://en.wikipedia.org/wiki/Less_(Unix)">less</a></code></p>
+      <p>
+	Automatically paging output from a command line tool through a
+        pager such
+        as <code><a href="https://en.wikipedia.org/wiki/Less_(Unix)">less</a></code>. Popularized
+        by the <code><a href="https://git-scm.com/">git</a></code>
+        version control system, it is now present and default in many
+        modern command line tools.
+      </p>
 
-      <p>Web ring: <a href="https://no-color.org/">no-color.org</a>
+      <h2>How to implement it</h2>
+
+      <p>
+	Recommendations
+	from <a href="https://mastodon.social/@juliank">Julian Andres
+	  Klode</a>, who added auto-paging support to Debian's apt
+	tool:
+      </p>
+
+      <blockquote>
+	We always invoke pager and have the environment variables
+
+	<pre>
+LESS=FRX
+MORE=FRX
+LV=C
+	</pre>
+
+	<p>such that it picks up your preferred pager; and then sets up the default.</p>
+
+	<p>
+	  For the auto-paging, F is important (so it doesn't page when
+	  it fits on the screen) and X is questionable (it keeps the
+	  output around after you exit the pager)
+	</p>
+
+	<p>
+	  Special care is taken to allow overriding the pager with
+	  APT_PAGER, PAGER; and of course if you specify "cat" as a
+	  pager you need to disable paging.
+	</p>
+
+	<p>
+	  The complex bits are in launching the pager and making sure the pager is launched; particularly
+	</p>
+
+	<ul>
+	  <li>
+	    a pipe needs to be used to communicate readiness (set
+  	    cloexec, after exec in the child() a read in the parent
+	    returns; if exec fails write errno to it)
+	  </li>
+
+	  <li>
+	    the pipe only works if you don't fork a shell, so detect when shell is needed.
+	  </li>
+	</ul>
+
+	<p>
+	  Also don't forget to redirect stdin to /dev/null (or a
+	  half-closed pipe) such that the piped process can't wait on
+	  stdin.
+	</p>
+
+	<p>
+	  Then you also need to do a whole bunch of signal handler stuff which is quite annoying.
+	</p>
+
+	<p>
+	  It really adds up to a couple hundred lines of code.
+	</p>
+      </blockquote>
+
+      <h2>Web Ring</h2>
+      <p><a href="https://no-color.org/">no-color.org</a></p>
     </div>
 
   </body>
