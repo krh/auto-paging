@@ -67,7 +67,15 @@
         as <code><a href="https://en.wikipedia.org/wiki/Less_(Unix)">less</a></code>. Popularized
         by the <code><a href="https://git-scm.com/">git</a></code>
         version control system, it is now present and default in many
-        modern command line tools.
+        modern command line tools.  The observation is that — unless
+        redirecting output to a file or pipe — users typically want to
+        view multi-page output in a pager.  A command line tool that
+        supports auto-paging, will detect when <code>stdout</code> is
+        a terminal and spawn a pager implementation and redirect its
+        output through that for convenience. To disable auto-paging,
+        many tools support a <code>--no-pager</code> option, but it
+        is also always possible the pipe the output
+        through <code>cat</code>.
       </p>
 
       <h2>How to Implement Auto-Paging</h2>
