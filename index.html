@@ -1,15 +1,55 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-</head>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <style>
+      html {
+	  font-family: "Nunito", sans-serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+      }
+
+      body, header, h1 { margin: 0 }
+      html, a {
+	  color: #1B2F33;
+	  background-color: #F3EFE0;
+      }
+      header {
+	  color: #F3EFE0;
+	  background-color: #F55D3E;
+      }
+
+      .container {
+	  padding: 20px 40px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+	  html, a {
+	      background-color: #1B2F33;
+	      color: #F3EFE0;
+	  }
+      }
+    </style>
+  </head>
   
   <body>
-<h1>Auto-Paging</h1>
+    <header class="container">
+      <h1>Auto-Paging</h1>
+    </header>
 
-<h2>What is auto-paging?</h2>
 
-<p>Who knows.</p>
+    <div class="container">
+      <h2>What is auto-paging?</h2>
 
-</body>
+      <p>Automatically paging output from a command line tool through a pager such as <code><a href="https://en.wikipedia.org/wiki/Less_(Unix)">less</a></code></p>
+
+      <p>Web ring: <a href="https://no-color.org/">no-color.org</a>
+    </div>
+
+  </body>
 </html>
